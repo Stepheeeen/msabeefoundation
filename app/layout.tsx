@@ -1,14 +1,14 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Inter, Outfit } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
+const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' })
 
 export const metadata: Metadata = {
-  title: 'MSA BEE Foundation | Building Champions on Court and in Classroom',
-  description: 'Supporting underprivileged youth in Kogi State, Nigeria through basketball training and educational excellence.',
+  title: 'MSA BEE Foundation | Holistic Development & Educational Excellence',
+  description: 'Cultivating a society that values physical, social, cognitive, and emotional growth through sports and education in Nigeria.',
   generator: 'v0.app',
   icons: {
     icon: [
@@ -35,11 +35,12 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className="font-sans antialiased">
+    <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
+      <body className="font-sans antialiased bg-slate-50 text-slate-900">
         {children}
         <Analytics />
       </body>
     </html>
   )
 }
+

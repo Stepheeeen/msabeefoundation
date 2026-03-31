@@ -1,86 +1,96 @@
 'use client';
 
-import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Calendar, Users, HeartPulse, GraduationCap } from 'lucide-react';
 import Link from 'next/link';
 
 export function ImpactSnippet() {
   const events = [
     {
-      title: 'September 2025 Lokoja Clinic',
-      subtitle: 'Record-Breaking Success',
-      highlights: '100+ youth trained across 3 days',
+      title: 'Annual Lokoja Clinic',
+      subtitle: 'Building Champions',
+      highlights: '100+ youth trained in elite sports and wellness programs.',
       date: 'September 2025',
-      image: 'bg-gradient-to-br from-orange-400 to-orange-600',
+      image: "https://images.unsplash.com/photo-1544928147-79a2dbc1f389?q=80&w=800&auto=format&fit=crop",
     },
     {
-      title: 'Scholarship Awards',
-      subtitle: 'Educational Impact',
-      highlights: 'Multiple students sponsored for school fees',
-      date: 'Ongoing',
-      image: 'bg-gradient-to-br from-blue-400 to-blue-600',
+      title: 'Educational Grants',
+      subtitle: 'Academic Excellence',
+      highlights: 'Providing school fees and materials to underprivileged students.',
+      date: 'Ongoing 2025',
+      image: "https://images.unsplash.com/photo-1503676260728-1c00da0702e8?q=80&w=800&auto=format&fit=crop",
     },
     {
-      title: 'Community Outreach',
-      subtitle: 'Spreading the Movement',
-      highlights: 'Basketball clinics and educational awareness',
-      date: 'Throughout 2025',
-      image: 'bg-gradient-to-br from-green-400 to-green-600',
+      title: 'Community Health',
+      subtitle: 'Holistic Wellness',
+      highlights: 'Workshops on mental health and physical well-being.',
+      date: 'Quarterly',
+      image: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=800&auto=format&fit=crop",
     },
   ];
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold text-slate-900 mb-4">
-            Recent Impact & News
-          </h2>
-          <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-            See the transformation happening in Kogi State through our programs
+    <section className="py-32 px-4 sm:px-6 lg:px-8 bg-slate-50 overflow-hidden">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-24">
+          <h2 className="text-sm font-black tracking-[0.4em] text-orange-600 uppercase mb-6">Our Progress</h2>
+          <h3 className="text-5xl sm:text-7xl font-heading font-black text-slate-900 mb-8 leading-tight tracking-tighter">
+            Tangible <span className="text-orange-500 italic font-light">Impact</span>
+          </h3>
+          <p className="text-xl text-slate-500 max-w-3xl mx-auto font-light leading-relaxed">
+            Stay updated with our latest initiatives and the sustainable changes we are driving in Kogi State.
           </p>
         </div>
 
         {/* Event Cards */}
-        <div className="grid md:grid-cols-3 gap-8 mb-8">
+        <div className="grid lg:grid-cols-3 gap-12 mb-24">
           {events.map((event, idx) => (
-            <Card key={idx} className="overflow-hidden hover:shadow-lg transition-shadow">
-              <div className={`h-40 ${event.image}`} />
-              <div className="p-6">
-                <Badge className="bg-slate-900 text-white mb-3">{event.date}</Badge>
-                <h3 className="text-lg font-bold text-slate-900 mb-2">{event.title}</h3>
-                <p className="text-orange-600 font-semibold mb-2 text-sm">{event.subtitle}</p>
-                <p className="text-gray-600 text-sm">{event.highlights}</p>
+            <div key={idx} className="group bg-white rounded-[2.5rem] overflow-hidden border border-slate-100 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
+              <div className="h-72 overflow-hidden relative">
+                <img 
+                  src={event.image} 
+                  alt={event.title} 
+                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                />
+                <div className="absolute top-6 left-6">
+                  <Badge className="bg-slate-950 text-white px-4 py-1.5 rounded-full text-[10px] uppercase font-black tracking-widest border-none">
+                    {event.date}
+                  </Badge>
+                </div>
               </div>
-            </Card>
+              <div className="p-10">
+                <p className="text-orange-600 font-black mb-3 text-xs uppercase tracking-[0.2em]">{event.subtitle}</p>
+                <h3 className="text-3xl font-black text-slate-900 mb-6 group-hover:text-orange-500 transition-colors tracking-tighter leading-none">{event.title}</h3>
+                <p className="text-slate-500 text-sm leading-relaxed font-light mb-8">
+                  {event.highlights}
+                </p>
+                <div className="w-10 h-[2px] bg-slate-100 group-hover:w-full group-hover:bg-orange-500 transition-all duration-500" />
+              </div>
+            </div>
           ))}
         </div>
 
-        {/* Statistics Banner */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg p-4 text-center border border-orange-200">
-            <div className="text-2xl font-bold text-orange-600 mb-1">100+</div>
-            <div className="text-xs font-semibold text-gray-700">Youth Trained</div>
-          </div>
-          <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 text-center border border-blue-200">
-            <div className="text-2xl font-bold text-blue-600 mb-1">∞</div>
-            <div className="text-xs font-semibold text-gray-700">Lives Changed</div>
-          </div>
-          <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-4 text-center border border-green-200">
-            <div className="text-2xl font-bold text-green-600 mb-1">3</div>
-            <div className="text-xs font-semibold text-gray-700">Days Training</div>
-          </div>
-          <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-lg p-4 text-center border border-slate-200">
-            <div className="text-2xl font-bold text-slate-600 mb-1">24/7</div>
-            <div className="text-xs font-semibold text-gray-700">Commitment</div>
-          </div>
+        {/* Stats Banner - Premium Minimalist */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 mb-24">
+          {[
+            { label: 'Youth Trained', value: '100+', icon: Users },
+            { label: 'Success Rate', value: '95%', icon: GraduationCap },
+            { label: 'Programs Active', value: '4', icon: Calendar },
+            { label: 'Lives Changed', value: '∞', icon: HeartPulse },
+          ].map((stat, i) => (
+            <div key={i} className="text-center group">
+              <stat.icon className="w-10 h-10 text-slate-900 mx-auto mb-6 group-hover:text-orange-600 transition-colors duration-500 stroke-[1.5]" />
+              <div className="text-5xl font-black text-slate-900 mb-2 tracking-tighter group-hover:scale-110 transition-transform duration-500">{stat.value}</div>
+              <div className="text-xs font-black text-slate-400 uppercase tracking-[0.3em]">{stat.label}</div>
+            </div>
+          ))}
         </div>
 
         <div className="text-center">
           <Link href="/impact">
-            <Button className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-3">
-              View Full Impact
+            <Button size="xl" className="bg-slate-900 hover:bg-slate-800 text-white px-16 py-8 rounded-2xl transition-all shadow-2xl shadow-slate-200">
+              View Full Impact Report
             </Button>
           </Link>
         </div>
@@ -88,3 +98,5 @@ export function ImpactSnippet() {
     </section>
   );
 }
+
+
