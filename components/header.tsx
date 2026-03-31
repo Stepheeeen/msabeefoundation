@@ -26,22 +26,22 @@ export function Header() {
 
   return (
     <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled 
-          ? 'bg-white/80 backdrop-blur-md shadow-lg border-b border-slate-200 py-3' 
-          : 'bg-transparent py-5'
+          ? 'bg-white/90 backdrop-blur-md shadow-lg border-b border-slate-200 py-3' 
+          : 'bg-gradient-to-b from-slate-950/50 to-transparent py-6'
       }`}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="group flex items-center gap-2">
-          <div className={`text-2xl font-heading font-black tracking-tighter transition-colors ${
+          <div className={`text-2xl font-heading font-black tracking-tighter transition-colors duration-500 ${
             isScrolled ? 'text-slate-900' : 'text-white'
           }`}>
             MSA <span className="text-orange-500">BEE</span>
           </div>
-          <div className={`text-[10px] uppercase tracking-widest font-bold transition-colors ${
-            isScrolled ? 'text-slate-500' : 'text-slate-400'
+          <div className={`text-[10px] uppercase tracking-[0.4em] font-black transition-colors duration-500 ${
+            isScrolled ? 'text-slate-500' : 'text-slate-300'
           }`}>
             Foundation
           </div>
@@ -53,7 +53,7 @@ export function Header() {
             <Link 
               key={link.name}
               href={link.href} 
-              className={`text-sm font-bold uppercase tracking-wider transition-all hover:text-orange-500 ${
+              className={`text-sm font-black uppercase tracking-[0.2em] transition-all duration-500 hover:text-orange-500 ${
                 isScrolled ? 'text-slate-700' : 'text-white'
               }`}
             >

@@ -2,153 +2,128 @@
 
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export default function ProgramsPage() {
+  const programs = [
+    {
+      title: 'Lokoja Basketball Clinic',
+      subtitle: 'Annual Elite Training',
+      highlights: 'An intensive 3-day clinic at Federal University Lokoja (FUL) for youth aged 8–18, focusing on elite sports and wellness.',
+      image: "https://images.unsplash.com/photo-1544928147-79a2dbc1f389?q=80&w=1200&auto=format&fit=crop",
+      features: ['Professional Coaching', 'Training Gear Provided', 'Scouting Pathways', 'Physical Education focus']
+    },
+    {
+      title: 'Educational Sponsorship',
+      subtitle: 'Unlocking Academic Potential',
+      highlights: 'Covering school fees and materials for underprivileged talents, ensuring that financial barriers don\'t limit their potential.',
+      image: "https://images.unsplash.com/photo-1503676260728-1c00da0702e8?q=80&w=1200&auto=format&fit=crop",
+      features: ['Fee Coverage', 'Material Provision', 'Academic Mentorship', 'Pathways to Higher Education']
+    }
+  ];
+
   return (
     <>
       <Header />
-      <main>
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 mb-4">
-                Our Programs
-              </h1>
-              <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-                Transforming lives through coordinated athletic and educational initiatives
-              </p>
-            </div>
+      <main className="pt-20">
+        {/* Dynamic Hero */}
+        <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 z-0">
+            <img 
+              src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=2500&auto=format&fit=crop" 
+              className="w-full h-full object-cover"
+              alt="Programs Overview"
+            />
+            <div className="absolute inset-0 bg-slate-950/70" />
+          </div>
+          <div className="relative z-10 max-w-5xl mx-auto px-4 text-center">
+            <h2 className="text-sm font-black tracking-[0.4em] text-orange-500 uppercase mb-6">Our Initiatives</h2>
+            <h1 className="text-6xl sm:text-8xl font-heading font-black text-white mb-8 tracking-tighter leading-none italic">
+              Strategic <span className="text-orange-500 non-italic">Impact</span>
+            </h1>
+            <p className="text-xl text-slate-200 max-w-2xl mx-auto font-light leading-relaxed">
+              Transforming lives through a coordinated approach that blends high-performance athletics with academic excellence.
+            </p>
+          </div>
+        </section>
 
-            <div className="grid md:grid-cols-2 gap-8">
-              {/* Basketball Clinic */}
-              <Card className="border-2 border-orange-200 hover:shadow-lg transition-shadow">
-                <CardHeader className="bg-gradient-to-r from-orange-50 to-orange-100 border-b-2 border-orange-200">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <CardTitle className="text-2xl text-slate-900">Lokoja Basketball Clinic</CardTitle>
-                      <p className="text-sm text-gray-600 mt-2">Annual Elite Training Event</p>
-                    </div>
-                    <Badge className="bg-orange-500 text-white">Active</Badge>
+        {/* Coordinated Impact Showcase */}
+        <section className="py-32 px-4 sm:px-6 lg:px-8 bg-white">
+          <div className="max-w-7xl mx-auto space-y-32">
+            {programs.map((program, idx) => (
+              <div key={idx} className={`flex flex-col lg:flex-row gap-16 items-center ${idx % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
+                {/* Image Showcase */}
+                <div className="lg:w-1/2 relative group">
+                  <div className="relative z-10 rounded-[3rem] overflow-hidden shadow-2xl transition-transform duration-700 group-hover:scale-105">
+                    <img 
+                      src={program.image} 
+                      alt={program.title} 
+                      className="w-full h-[600px] object-cover"
+                    />
                   </div>
-                </CardHeader>
-                <CardContent className="p-8">
-                  <div className="space-y-4 mb-6">
-                    <h4 className="font-semibold text-slate-900 text-lg">Program Details</h4>
-                    <ul className="space-y-3 text-gray-700">
-                      <li className="flex items-start gap-3">
-                        <span className="text-orange-500 font-bold mt-1">•</span>
-                        <span><strong>Duration:</strong> 3-day intensive clinic</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <span className="text-orange-500 font-bold mt-1">•</span>
-                        <span><strong>Location:</strong> Federal University Lokoja (FUL)</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <span className="text-orange-500 font-bold mt-1">•</span>
-                        <span><strong>Age Range:</strong> 8–18 years old</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <span className="text-orange-500 font-bold mt-1">•</span>
-                        <span><strong>2025 Impact:</strong> 100+ young athletes trained</span>
-                      </li>
-                    </ul>
-                  </div>
+                  {/* Premium Accents */}
+                  <div className="absolute -inset-10 bg-slate-900/5 rounded-full blur-3xl -z-10 group-hover:bg-orange-500/10 duration-700 transition-colors" />
+                </div>
 
-                  <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
-                    <h5 className="font-semibold text-slate-900 mb-3">What We Offer</h5>
-                    <ul className="space-y-2 text-sm text-gray-700">
-                      <li>✓ Professional coaching from experienced basketball trainers</li>
-                      <li>✓ Training gear and equipment provided</li>
-                      <li>✓ Talent scouting for exceptional performers</li>
-                      <li>✓ Mentorship and guidance for aspiring athletes</li>
-                      <li>✓ Wellness and physical education emphasis</li>
-                    </ul>
+                {/* Content Side */}
+                <div className="lg:w-1/2 space-y-8">
+                  <div>
+                    <h2 className="text-sm font-black tracking-[0.3em] text-orange-600 uppercase mb-4">{program.subtitle}</h2>
+                    <h3 className="text-5xl font-heading font-black text-slate-900 tracking-tighter leading-none mb-8 italic">
+                      {program.title}
+                    </h3>
+                    <p className="text-xl text-slate-500 leading-relaxed font-light mb-8">
+                      {program.highlights}
+                    </p>
                   </div>
-                </CardContent>
-              </Card>
-
-              {/* Educational Sponsorship */}
-              <Card className="border-2 border-blue-200 hover:shadow-lg transition-shadow">
-                <CardHeader className="bg-gradient-to-r from-blue-50 to-blue-100 border-b-2 border-blue-200">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <CardTitle className="text-2xl text-slate-900">Educational Sponsorship Program</CardTitle>
-                      <p className="text-sm text-gray-600 mt-2">Unlocking Academic Potential</p>
-                    </div>
-                    <Badge className="bg-blue-500 text-white">Active</Badge>
-                  </div>
-                </CardHeader>
-                <CardContent className="p-8">
-                  <div className="space-y-4 mb-6">
-                    <h4 className="font-semibold text-slate-900 text-lg">Program Details</h4>
-                    <ul className="space-y-3 text-gray-700">
-                      <li className="flex items-start gap-3">
-                        <span className="text-blue-500 font-bold mt-1">•</span>
-                        <span><strong>Target Group:</strong> Talented underprivileged students</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <span className="text-blue-500 font-bold mt-1">•</span>
-                        <span><strong>Coverage:</strong> School fees and educational materials</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <span className="text-blue-500 font-bold mt-1">•</span>
-                        <span><strong>Requirement:</strong> Commitment to both sports and academics</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <span className="text-blue-500 font-bold mt-1">•</span>
-                        <span><strong>Mentorship:</strong> Ongoing academic and personal guidance</span>
-                      </li>
-                    </ul>
+                  
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    {program.features.map((feature, i) => (
+                      <div key={i} className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100 hover:border-orange-500/20 transition-all">
+                        <div className="w-1.5 h-1.5 rounded-full bg-orange-500" />
+                        <span className="text-sm font-semibold text-slate-700">{feature}</span>
+                      </div>
+                    ))}
                   </div>
 
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                    <h5 className="font-semibold text-slate-900 mb-3">Sponsorship Benefits</h5>
-                    <ul className="space-y-2 text-sm text-gray-700">
-                      <li>✓ Full or partial school fee coverage</li>
-                      <li>✓ Educational materials and resources</li>
-                      <li>✓ Basketball training participation</li>
-                      <li>✓ Mentorship from foundation staff</li>
-                      <li>✓ Pathways to higher education opportunities</li>
-                    </ul>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Impact Focus */}
-            <Card className="mt-12 bg-gradient-to-r from-slate-900 to-slate-800 border-0">
-              <CardContent className="p-8 text-white">
-                <h3 className="text-2xl font-bold mb-4">Combating Social Challenges</h3>
-                <p className="mb-4 text-gray-200">
-                  By providing structured athletic and educational opportunities, the MSA BEE Foundation actively addresses critical social issues affecting youth in Kogi State:
-                </p>
-                <div className="grid md:grid-cols-3 gap-6 mt-6">
-                  <div className="flex gap-3">
-                    <span className="text-orange-400 font-bold text-xl">→</span>
-                    <div>
-                      <h4 className="font-semibold mb-1">Reducing Drug Abuse</h4>
-                      <p className="text-gray-300 text-sm">Channeling youth energy into sports and wellness</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-3">
-                    <span className="text-orange-400 font-bold text-xl">→</span>
-                    <div>
-                      <h4 className="font-semibold mb-1">Preventing Cultism</h4>
-                      <p className="text-gray-300 text-sm">Building positive community and brotherhood through sports</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-3">
-                    <span className="text-orange-400 font-bold text-xl">→</span>
-                    <div>
-                      <h4 className="font-semibold mb-1">Promoting Education</h4>
-                      <p className="text-gray-300 text-sm">Ensuring financial barriers don't prevent academic success</p>
-                    </div>
+                  <div className="pt-8">
+                    <Link href="/about">
+                      <Button size="xl" className="bg-slate-900 hover:bg-slate-800 text-white px-12 py-8 rounded-2xl transition-all shadow-xl shadow-slate-200 uppercase tracking-widest text-sm font-black">
+                        Learn More
+                      </Button>
+                    </Link>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Social Challenges Banner */}
+        <section className="py-32 px-4 sm:px-6 lg:px-8 bg-slate-950 text-white relative overflow-hidden">
+          <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
+          <div className="max-w-7xl mx-auto relative z-10">
+            <div className="text-center mb-24">
+              <h2 className="text-sm font-black tracking-[0.4em] text-orange-500 uppercase mb-6">Beyond Sports</h2>
+              <h3 className="text-5xl sm:text-7xl font-heading font-black tracking-tighter leading-tight italic">
+                Addressing <span className="text-gradient">Real Challenges</span>
+              </h3>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-12">
+              {[
+                { title: 'Combating Drug Abuse', desc: 'Channelling youthful energy into structured wellness and athletics.' },
+                { title: 'Preventing Cultism', desc: 'Building positive community and a sense of belonging through sports.' },
+                { title: 'Promoting Education', desc: 'Ensuring that financial barriers never limit academic dreams.' }
+              ].map((challenge, i) => (
+                <div key={i} className="p-10 rounded-[2.5rem] bg-white/5 border border-white/5 hover:border-orange-500/20 transition-all duration-500">
+                  <div className="text-4xl font-black text-slate-800 group-hover:text-orange-500 duration-500 mb-6 tracking-tighter opacity-30 italic">0{i+1}</div>
+                  <h4 className="text-2xl font-bold text-white mb-4 tracking-tight">{challenge.title}</h4>
+                  <p className="text-slate-400 font-light leading-relaxed">{challenge.desc}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
       </main>
@@ -156,3 +131,4 @@ export default function ProgramsPage() {
     </>
   );
 }
+
