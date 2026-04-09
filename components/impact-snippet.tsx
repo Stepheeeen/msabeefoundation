@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Calendar, Users, HeartPulse, GraduationCap } from 'lucide-react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 export function ImpactSnippet() {
   const events = [
@@ -35,8 +36,8 @@ export function ImpactSnippet() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-24">
           <h2 className="text-sm font-black tracking-[0.4em] text-orange-600 uppercase mb-6">Our Progress</h2>
-          <h3 className="text-5xl sm:text-7xl font-heading font-black text-slate-900 mb-8 leading-tight tracking-tighter">
-            Tangible <span className="text-orange-500 italic font-light">Impact</span>
+          <h3 className="text-5xl sm:text-7xl font-heading font-black text-slate-900 mb-8 leading-tight tracking-tighter text-balance">
+            Tangible Impact
           </h3>
           <p className="text-xl text-slate-500 max-w-3xl mx-auto font-light leading-relaxed">
             Stay updated with our latest initiatives and the sustainable changes we are driving in Kogi State.
@@ -46,7 +47,7 @@ export function ImpactSnippet() {
         {/* Event Cards */}
         <div className="grid lg:grid-cols-3 gap-12 mb-24">
           {events.map((event, idx) => (
-            <div key={idx} className="group bg-white rounded-[2.5rem] overflow-hidden border border-slate-100 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
+            <div key={idx} className="group bg-white rounded-xl overflow-hidden border border-slate-100 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
               <div className="h-72 overflow-hidden relative">
                 <img 
                   src={event.image} 
@@ -54,7 +55,7 @@ export function ImpactSnippet() {
                   className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                 />
                 <div className="absolute top-6 left-6">
-                  <Badge className="bg-slate-950 text-white px-4 py-1.5 rounded-full text-[10px] uppercase font-black tracking-widest border-none">
+                  <Badge className="bg-slate-950 text-white px-4 py-1.5 rounded-lg text-[10px] uppercase font-black tracking-widest border-none">
                     {event.date}
                   </Badge>
                 </div>
@@ -80,7 +81,21 @@ export function ImpactSnippet() {
             { label: 'Lives Changed', value: '∞', icon: HeartPulse },
           ].map((stat, i) => (
             <div key={i} className="text-center group">
-              <stat.icon className="w-10 h-10 text-slate-900 mx-auto mb-6 group-hover:text-orange-600 transition-colors duration-500 stroke-[1.5]" />
+              <div 
+                className="mb-6 flex items-center justify-center"
+                style={{ perspective: "1000px" }}
+              >
+                <motion.div
+                  whileHover={{ 
+                    rotateX: 20, 
+                    rotateY: 20,
+                    scale: 1.2
+                  }}
+                  className="text-slate-900 group-hover:text-orange-600 transition-colors duration-500"
+                >
+                  <stat.icon className="w-10 h-10 stroke-[1.5]" />
+                </motion.div>
+              </div>
               <div className="text-5xl font-black text-slate-900 mb-2 tracking-tighter group-hover:scale-110 transition-transform duration-500">{stat.value}</div>
               <div className="text-xs font-black text-slate-400 uppercase tracking-[0.3em]">{stat.label}</div>
             </div>
@@ -89,7 +104,7 @@ export function ImpactSnippet() {
 
         <div className="text-center">
           <Link href="/impact">
-            <Button size="xl" className="bg-slate-900 hover:bg-slate-800 text-white px-16 py-8 rounded-2xl transition-all shadow-2xl shadow-slate-200">
+            <Button size="xl" className="bg-slate-900 hover:bg-slate-800 text-white px-16 py-8 rounded-lg transition-all shadow-2xl shadow-slate-200">
               View Full Impact Report
             </Button>
           </Link>

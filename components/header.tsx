@@ -3,11 +3,14 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Search } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,86 +29,125 @@ export function Header() {
 
   return (
     <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-white/90 backdrop-blur-md shadow-lg border-b border-slate-200 py-3' 
-          : 'bg-gradient-to-b from-slate-950/50 to-transparent py-6'
+          ? 'bg-background/80 backdrop-blur-xl border-b border-border py-4' 
+          : 'bg-transparent py-8'
       }`}
     >
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+      <nav className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="group flex items-center gap-2">
-          <div className={`text-2xl font-heading font-black tracking-tighter transition-colors duration-500 ${
-            isScrolled ? 'text-slate-900' : 'text-white'
-          }`}>
-            MSA <span className="text-orange-500">BEE</span>
+        <Link href="/" className="flex items-center gap-2 group">
+          <div className="text-xl font-bold tracking-tight text-foreground">
+            MSA <span className="text-primary font-black ml-1">BEE</span>
           </div>
-          <div className={`text-[10px] uppercase tracking-[0.4em] font-black transition-colors duration-500 ${
-            isScrolled ? 'text-slate-500' : 'text-slate-300'
-          }`}>
+          <div className="hidden sm:block text-[8px] uppercase tracking-[0.5em] font-medium text-muted-foreground opacity-60">
             Foundation
           </div>
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-10">
+        <div className="hidden md:flex items-center gap-12">
           {navLinks.map((link) => (
             <Link 
               key={link.name}
               href={link.href} 
-              className={`text-sm font-black uppercase tracking-[0.2em] transition-all duration-500 hover:text-orange-500 ${
-                isScrolled ? 'text-slate-700' : 'text-white'
-              }`}
+              className="text-[11px] font-bold uppercase tracking-[0.25em] text-foreground/70 hover:text-primary transition-colors"
             >
               {link.name}
             </Link>
           ))}
         </div>
 
-        {/* CTA Button */}
-        <div className="hidden md:flex items-center gap-4">
+        {/* Desktop Actions */}
+        <div className="hidden md:flex items-center gap-8">
+          <button 
+            onClick={() => setIsSearchOpen(!isSearchOpen)}
+            className="p-1 text-foreground/60 hover:text-primary transition-colors"
+            aria-label="Search"
+          >
+            <Search className="w-4 h-4" />
+          </button>
           <Link href="/donate">
-            <Button className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-6 text-sm font-bold uppercase tracking-widest rounded-xl transition-all hover:scale-105 active:scale-95 shadow-lg shadow-orange-500/20">
-              Donate Now
+            <Button variant="outline" className="rounded-lg px-6 h-10 text-[10px] font-bold uppercase tracking-widest border-border hover:bg-primary hover:text-primary-foreground transition-all">
+              Donate
             </Button>
           </Link>
         </div>
 
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden p-2 rounded-xl bg-orange-600 text-white"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
+        {/* Mobile Toggle */}
+        <div className="md:hidden flex items-center gap-4">
+          <button 
+            onClick={() => setIsSearchOpen(!isSearchOpen)}
+            className="p-2 text-foreground/60"
+          >
+            <Search className="w-5 h-5" />
+          </button>
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="p-2 text-foreground"
+            aria-label="Menu"
+          >
+            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
       </nav>
+
+      {/* Modern Search Overlay */}
+      <AnimatePresence>
+        {isSearchOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-background/95 backdrop-blur-md flex items-center justify-center p-8"
+          >
+            <div className="max-w-3xl w-full relative">
+              <input
+                type="text"
+                autoFocus
+                placeholder="Find programs, stories..."
+                className="w-full text-4xl md:text-6xl font-light bg-transparent border-none focus:ring-0 outline-none text-foreground text-center pb-8 border-b border-border"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <button 
+                onClick={() => setIsSearchOpen(false)}
+                className="absolute -top-32 right-0 p-4 text-muted-foreground hover:text-foreground transition-colors"
+                aria-label="Close"
+              >
+                <X className="w-8 h-8" />
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Mobile Menu */}
       <div 
-        className={`md:hidden absolute top-full left-0 right-0 bg-white shadow-2xl border-t border-slate-100 transition-all duration-300 overflow-hidden ${
-          isMenuOpen ? 'max-h-screen py-8' : 'max-h-0 py-0'
+        className={`md:hidden absolute top-full left-0 right-0 bg-background border-b border-border transition-all duration-300 overflow-hidden ${
+          isMenuOpen ? 'max-h-screen border-t border-border' : 'max-h-0'
         }`}
       >
-        <div className="flex flex-col items-center gap-6 px-4">
+        <div className="flex flex-col p-12 gap-8 text-center">
           {navLinks.map((link) => (
             <Link 
               key={link.name}
               href={link.href} 
-              className="text-lg font-bold text-slate-800 hover:text-orange-600 transition-colors"
+              className="text-2xl font-light text-foreground"
               onClick={() => setIsMenuOpen(false)}
             >
               {link.name}
             </Link>
           ))}
-          <Link href="/donate" className="w-full pt-4" onClick={() => setIsMenuOpen(false)}>
-            <Button className="w-full bg-orange-600 hover:bg-orange-700 text-white py-6 text-lg font-bold rounded-2xl">
+          <Link href="/donate" className="pt-4" onClick={() => setIsMenuOpen(false)}>
+            <Button className="w-full rounded-lg h-14 text-sm font-bold uppercase tracking-widest bg-primary text-primary-foreground">
               Donate Now
             </Button>
           </Link>
         </div>
       </div>
     </header>
+
   );
 }
-

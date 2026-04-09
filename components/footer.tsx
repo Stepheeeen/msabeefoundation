@@ -2,37 +2,65 @@
 
 import Link from 'next/link';
 import { Mail, Globe, MapPin, Instagram, Twitter, Facebook } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export function Footer() {
   return (
-    <footer className="bg-slate-950 text-white py-24 px-4 sm:px-6 lg:px-8 border-t border-slate-900 overflow-hidden relative">
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-orange-600/5 rounded-full blur-[100px] pointer-events-none" />
-      <div className="max-w-7xl mx-auto relative z-10">
+    <footer className="bg-background text-foreground py-24 px-4 sm:px-6 lg:px-8 border-t border-border overflow-hidden">
+      <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-4 gap-16 mb-20">
           {/* Brand */}
           <div className="col-span-1 md:col-span-1 space-y-8">
             <Link href="/" className="group inline-block">
-              <h3 className="text-4xl font-heading font-black tracking-tighter">
-                MSA <span className="text-orange-500">BEE</span>
+              <h3 className="text-3xl font-black tracking-tighter">
+                MSA <span className="text-primary">BEE</span>
               </h3>
-              <div className="text-[10px] uppercase tracking-[0.4em] text-slate-500 font-black mt-1">Foundation</div>
+              <div className="text-[10px] uppercase tracking-[0.4em] text-muted-foreground font-bold mt-1">Foundation</div>
             </Link>
-            <p className="text-slate-400 text-sm leading-relaxed max-w-xs font-light">
-              Cultivating a society that values holistic development, encompassing physical, social, cognitive, and emotional growth.
+            <p className="text-muted-foreground text-sm leading-relaxed max-w-xs font-medium">
+              Cultivating a society that values holistic development, encompassing physical, social, and cognitive growth.
             </p>
-            <div className="flex gap-4">
-              {[Instagram, Twitter, Facebook].map((Icon, i) => (
-                <Link key={i} href="#" className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-slate-400 hover:bg-orange-600 hover:text-white transition-all duration-500 border border-white/5 hover:border-orange-500/20">
-                  <Icon className="w-5 h-5" />
-                </Link>
-              ))}
-            </div>
+            <div className="flex items-center gap-4">
+            {[
+              { icon: Twitter, href: 'https://twitter.com/msabeefoundation' },
+              { icon: Facebook, href: 'https://facebook.com/msabeefoundation' },
+              { icon: Instagram, href: 'https://instagram.com/msabeefoundation' },
+            ].map((social, i) => (
+              <Link 
+                key={i} 
+                href={social.href} 
+                className="w-12 h-12 flex items-center justify-center rounded-md border border-border hover:border-primary/50 transition-all group relative overflow-visible"
+              >
+                {/* Pop Effect Background */}
+                <motion.div
+                  initial={{ scale: 0, opacity: 0 }}
+                  whileHover={{ scale: 2.5, opacity: 0.15 }}
+                  transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                  className="absolute inset-0 flex items-center justify-center text-primary pointer-events-none"
+                >
+                  <social.icon className="w-full h-full stroke-[1] blur-md" />
+                </motion.div>
+
+                <motion.div
+                  whileHover={{ 
+                    rotateX: 20, 
+                    rotateY: 20,
+                    scale: 1.1
+                  }}
+                  transition={{ type: "spring", stiffness: 300, damping: 10 }}
+                  className="text-muted-foreground group-hover:text-primary transition-colors duration-300 relative z-10"
+                >
+                  <social.icon className="w-5 h-5 stroke-[1.5]" />
+                </motion.div>
+              </Link>
+            ))}
+          </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-orange-500 mb-10">Foundation</h4>
-            <ul className="space-y-6 text-sm">
+            <h4 className="text-[10px] font-bold uppercase tracking-[0.4em] text-primary mb-10">Foundation</h4>
+            <ul className="space-y-6 text-[13px] font-medium">
               {[
                 { name: 'Our Story', href: '/about' },
                 { name: 'Impact Report', href: '/impact' },
@@ -40,7 +68,7 @@ export function Footer() {
                 { name: 'Support Us', href: '/donate' },
               ].map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-slate-400 hover:text-white transition-colors duration-300 font-medium">
+                  <Link href={link.href} className="text-muted-foreground hover:text-foreground transition-colors">
                     {link.name}
                   </Link>
                 </li>
@@ -50,37 +78,33 @@ export function Footer() {
 
           {/* Impact Areas */}
           <div>
-            <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-orange-500 mb-10">Strategic Pillars</h4>
-            <ul className="space-y-6 text-sm">
-              <li className="text-slate-400 font-medium">Holistic Development</li>
-              <li className="text-slate-400 font-medium">Education & Health</li>
-              <li className="text-slate-400 font-medium">Talent Nurturing</li>
-              <li className="text-slate-400 font-medium">Community Engagement</li>
+            <h4 className="text-[10px] font-bold uppercase tracking-[0.4em] text-primary mb-10">Strategic Pillars</h4>
+            <ul className="space-y-6 text-[13px] font-medium text-muted-foreground">
+              <li>Holistic Development</li>
+              <li>Education & Health</li>
+              <li>Talent Nurturing</li>
+              <li>Community Engagement</li>
             </ul>
           </div>
 
           {/* Contact */}
           <div>
-            <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-orange-500 mb-10">Get in Touch</h4>
-            <ul className="space-y-8 text-sm">
-              <li className="flex gap-4 items-start group">
-                <div className="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-500 border border-orange-500/20 group-hover:bg-orange-500 group-hover:text-white transition-all duration-500">
-                  <Mail className="w-4 h-4" />
-                </div>
+            <h4 className="text-[10px] font-bold uppercase tracking-[0.4em] text-primary mb-10">Get in Touch</h4>
+            <ul className="space-y-8 text-[13px] font-medium">
+              <li className="flex gap-4 items-start">
+                <Mail className="w-4 h-4 text-primary mt-0.5" />
                 <div>
-                  <label className="text-[9px] uppercase tracking-widest text-slate-600 block mb-1">Email</label>
-                  <a href="mailto:info@msabeefoundation.com" className="text-slate-400 hover:text-white transition-colors font-medium">
+                  <label className="text-[9px] uppercase tracking-widest text-muted-foreground block mb-1 font-bold">Email</label>
+                  <a href="mailto:info@msabeefoundation.com" className="text-muted-foreground hover:text-foreground transition-colors">
                     info@msabeefoundation.com
                   </a>
                 </div>
               </li>
-              <li className="flex gap-4 items-start group">
-                <div className="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-500 border border-orange-500/20 group-hover:bg-orange-500 group-hover:text-white transition-all duration-500">
-                  <MapPin className="w-4 h-4" />
-                </div>
+              <li className="flex gap-4 items-start">
+                <MapPin className="w-4 h-4 text-primary mt-0.5" />
                 <div>
-                  <label className="text-[9px] uppercase tracking-widest text-slate-600 block mb-1">Headquarters</label>
-                  <span className="text-slate-400 leading-relaxed font-medium">
+                  <label className="text-[9px] uppercase tracking-widest text-muted-foreground block mb-1 font-bold">Location</label>
+                  <span className="text-muted-foreground leading-relaxed">
                     122 IBB Way Lokoja, Kogi State
                   </span>
                 </div>
@@ -90,19 +114,25 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-12 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-8">
-          <p className="text-slate-600 text-xs font-medium tracking-wide">
-            © {new Date().getFullYear()} MSA BEE FOUNDATION. ALL RIGHTS RESERVED.
-          </p>
-          <div className="flex gap-12 text-[10px] font-black uppercase tracking-[0.3em] text-slate-700">
-            <Link href="#" className="hover:text-orange-500 transition-colors">Privacy</Link>
-            <Link href="#" className="hover:text-orange-500 transition-colors">Terms</Link>
-            <Link href="#" className="hover:text-orange-500 transition-colors">Cookies</Link>
+        <div className="pt-12 border-t border-border flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="space-y-2 text-center md:text-left">
+            <p className="text-muted-foreground text-[11px] font-bold tracking-wide">
+              © {new Date().getFullYear()} MSA BEE FOUNDATION. ALL RIGHTS RESERVED.
+            </p>
+            <p className="text-[9px] font-bold uppercase tracking-[0.2em] opacity-40">
+              By <a href="https://stephenonucheyo.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Stephen Onucheyo</a>
+            </p>
+          </div>
+          <div className="flex gap-10 text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground">
+            <Link href="/" className="hover:text-primary transition-colors">Privacy</Link>
+            <Link href="/" className="hover:text-primary transition-colors">Terms</Link>
+            <Link href="/" className="hover:text-primary transition-colors">Cookies</Link>
           </div>
         </div>
       </div>
     </footer>
   );
 }
+
 
 

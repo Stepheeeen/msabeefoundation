@@ -3,110 +3,145 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { Heart, Book, Briefcase, Plus } from 'lucide-react';
 
 export function DonateSnippet() {
+  const allocations = [
+    { icon: Heart, label: "Basketball Training", value: "40%", description: "Elite coaching and equipment" },
+    { icon: Book, label: "Educational Sponsorship", value: "45%", description: "School fees & materials" },
+    { icon: Briefcase, label: "Operations & Outreach", value: "15%", description: "Administration & community" },
+  ];
+
   const donationLevels = [
     {
       amount: '₦5,000',
       title: 'Friend',
       description: 'Provides training gear for one youth',
-      color: 'from-orange-50 to-orange-100',
-      border: 'border-orange-200',
     },
     {
       amount: '₦10,000',
       title: 'Champion',
       description: 'Contributes to month of program operations',
-      color: 'from-blue-50 to-blue-100',
-      border: 'border-blue-200',
       featured: true,
     },
     {
       amount: '₦50,000',
       title: 'Leader',
       description: "Sponsors one student's school fees for a term",
-      color: 'from-green-50 to-green-100',
-      border: 'border-green-200',
     },
   ];
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold text-slate-900 mb-4">
-            Support Our Mission
-          </h2>
-          <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-            Your donation directly transforms lives. Choose your impact level.
-          </p>
-        </div>
+    <section className="minimal-section bg-background">
+      <div className="text-center mb-16">
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-primary font-bold uppercase tracking-[0.3em] text-[10px] mb-4"
+        >
+          Make an Impact
+        </motion.div>
+        <motion.h2 
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1 }}
+          className="text-4xl md:text-5xl font-black text-foreground mb-6 tracking-tighter"
+        >
+          Support Our Mission
+        </motion.h2>
+        <motion.p 
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+          className="text-lg text-muted-foreground max-w-2xl mx-auto font-medium"
+        >
+          Your donation directly transforms lives. Choose your impact level.
+        </motion.p>
+      </div>
 
-        {/* How Funds Are Used */}
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
-          <Card className="border-2 border-slate-200">
-            <CardContent className="p-8">
-              <div className="text-4xl mb-4">🏀</div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">Basketball Training</h3>
-              <p className="text-gray-700 text-sm mb-3">Elite coaching and equipment</p>
-              <div className="text-3xl font-bold text-orange-600">40%</div>
-            </CardContent>
-          </Card>
-
-          <Card className="border-2 border-slate-200">
-            <CardContent className="p-8">
-              <div className="text-4xl mb-4">📚</div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">Educational Sponsorship</h3>
-              <p className="text-gray-700 text-sm mb-3">School fees & materials</p>
-              <div className="text-3xl font-bold text-blue-600">45%</div>
-            </CardContent>
-          </Card>
-
-          <Card className="border-2 border-slate-200">
-            <CardContent className="p-8">
-              <div className="text-4xl mb-4">💼</div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">Operations & Outreach</h3>
-              <p className="text-gray-700 text-sm mb-3">Administration & community</p>
-              <div className="text-3xl font-bold text-green-600">15%</div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Donation Levels */}
-        <div className="mb-16">
-          <div className="grid md:grid-cols-3 gap-8">
-            {donationLevels.map((level, idx) => (
-              <Card
-                key={idx}
-                className={`border-2 ${level.border} ${level.featured ? 'ring-2 ring-orange-500 lg:scale-105' : ''}`}
+      {/* Allocation */}
+      <div className="grid lg:grid-cols-3 gap-8 mb-16">
+        {allocations.map((item, i) => (
+          <motion.div 
+            key={i} 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.1 }}
+            className="soft-card flex flex-col items-center text-center py-12 group rounded-md"
+          >
+            <div 
+              className="mb-8 flex items-center justify-center relative w-16 h-16 mx-auto"
+              style={{ perspective: "1000px" }}
+            >
+              {/* Pop Effect Background */}
+              <motion.div
+                initial={{ scale: 0, opacity: 0 }}
+                whileHover={{ scale: 2, opacity: 0.15 }}
+                transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                className="absolute inset-0 flex items-center justify-center text-primary pointer-events-none"
               >
-                <div className={`bg-gradient-to-r ${level.color} px-6 py-6 border-b-2 ${level.border}`}>
-                  <div className="text-3xl font-bold text-slate-900">{level.amount}</div>
-                  <div className="text-base font-semibold text-gray-700 mt-1">{level.title}</div>
-                </div>
-                <CardContent className="p-6">
-                  <p className="text-gray-700 text-sm mb-4">{level.description}</p>
-                  <Link href="/donate">
-                    <Button
-                      className={`w-full ${level.featured ? 'bg-orange-500 hover:bg-orange-600' : 'bg-slate-900 hover:bg-slate-800'} text-white text-sm`}
-                    >
-                      Donate {level.amount}
-                    </Button>
-                  </Link>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
+                <item.icon className="w-full h-full stroke-[1] blur-md" />
+              </motion.div>
 
-        <div className="text-center">
-          <Link href="/donate">
-            <Button className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-3">
-              View All Giving Options
-            </Button>
-          </Link>
-        </div>
+              <motion.div
+                whileHover={{ 
+                  rotateX: 20, 
+                  rotateY: 20,
+                  scale: 1.1
+                }}
+                transition={{ type: "spring", stiffness: 300, damping: 10 }}
+                className="text-muted-foreground group-hover:text-primary transition-colors duration-300 relative z-10"
+              >
+                <item.icon className="w-10 h-10 stroke-[1.5]" />
+              </motion.div>
+            </div>
+            <h3 className="text-xl font-bold mb-2 tracking-tight">{item.label}</h3>
+            <p className="text-sm text-muted-foreground mb-4 font-medium">{item.description}</p>
+            <div className="text-3xl font-black text-primary">{item.value}</div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Donation Levels */}
+      <div className="grid md:grid-cols-3 gap-6 mb-16">
+        {donationLevels.map((level, idx) => (
+          <motion.div
+            key={idx}
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 * idx }}
+            className={`soft-card flex flex-col h-full ${level.featured ? 'border-primary/50' : ''}`}
+          >
+            <div className="mb-6">
+              <div className="text-3xl font-black text-foreground mb-1 tracking-tighter">{level.amount}</div>
+              <div className="text-[10px] uppercase font-bold tracking-[0.2em] text-primary">{level.title}</div>
+            </div>
+            <p className="text-sm text-muted-foreground mb-8 font-medium">{level.description}</p>
+            <div className="mt-auto">
+              <Link href="/donate">
+                <Button className={`w-full rounded-lg h-12 text-[10px] font-bold uppercase tracking-widest ${level.featured ? 'bg-primary text-primary-foreground' : 'variant-outline'}`}>
+                  Donate {level.amount}
+                </Button>
+              </Link>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      <div className="text-center">
+        <Link href="/donate">
+          <Button variant="outline" className="rounded-lg px-12 h-14 text-[11px] font-bold uppercase tracking-widest border-border hover:bg-secondary transition-all">
+            See All Giving Options
+          </Button>
+        </Link>
       </div>
     </section>
   );
 }
+

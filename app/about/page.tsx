@@ -2,133 +2,138 @@
 
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { Target, Eye, HeartPulse, Trophy, Users, ShieldCheck } from 'lucide-react';
-import { Header } from '@/components/header';
-import { Footer } from '@/components/footer';
+import { motion } from 'framer-motion';
+import { Target, Eye, HeartPulse, Trophy, Users, ShieldCheck, ArrowRight } from 'lucide-react';
 
 export default function AboutPage() {
   return (
-    <>
-      <Header />
-      <main className="pt-20">
+    <div className="pt-20 bg-background text-foreground">
         {/* Premium Hero Section */}
-        <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
+        <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 z-0">
             <img 
               src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=2500&auto=format&fit=crop" 
               className="w-full h-full object-cover"
               alt="About MSA BEE"
             />
-            <div className="absolute inset-0 bg-slate-950/60" />
+            <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[2px]" />
           </div>
           <div className="relative z-10 max-w-5xl mx-auto px-4 text-center">
-            <h1 className="text-6xl sm:text-8xl font-heading font-black text-white mb-8 tracking-tighter leading-none">
-              Our <span className="text-orange-500 italic font-light">Heritage</span> & Future
-            </h1>
-            <p className="text-xl text-slate-200 max-w-2xl mx-auto font-light leading-relaxed">
-              Building a legacy of holistic excellence in Nigeria through the synergy of sports, education, and character.
-            </p>
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-4xl sm:text-7xl lg:text-8xl font-black text-white mb-8 tracking-tighter leading-tight text-balance"
+            >
+              Our Heritage <br/> & <span className="text-primary">Future</span>
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto font-medium"
+            >
+              Building a legacy of holistic excellence in Nigeria through sports, education, and character.
+            </motion.p>
           </div>
         </section>
 
         {/* Philosophy & Mission */}
-        <section className="py-32 px-4 sm:px-6 lg:px-8 bg-white">
-          <div className="max-w-7xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-24 items-center">
-              <div className="space-y-12">
-                <div>
-                  <h2 className="text-sm font-black tracking-[0.4em] text-orange-600 uppercase mb-6">Our Philosophy</h2>
-                  <h3 className="text-4xl sm:text-6xl font-heading font-black text-slate-900 leading-[1.1] tracking-tighter">
-                    Shaping the <br/> <span className="text-orange-500 underline decoration-slate-200 underline-offset-8">Complete</span> Individual
-                  </h3>
-                </div>
-                <p className="text-xl text-slate-600 leading-relaxed font-light">
-                  The MSA BEE FOUNDATION envisions a society that values holistic health, education, and sports. Our mission is to cultivate individuals who excel not just in competition, but in life—fostering physical, social, cognitive, and emotional growth.
+        <section className="minimal-section border-b border-border">
+          <div className="grid lg:grid-cols-2 gap-16 md:gap-24 items-center">
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="space-y-8 md:y-12"
+            >
+              <div>
+                <div className="text-primary font-bold uppercase tracking-[0.3em] text-[10px] mb-6">Our Philosophy</div>
+                <h3 className="text-3xl md:text-6xl font-black text-foreground leading-tight tracking-tighter mb-8 text-balance">
+                  Shaping the <span className="text-primary">Complete</span> Individual
+                </h3>
+                <p className="text-lg text-muted-foreground leading-relaxed font-medium">
+                  The MSA BEE FOUNDATION envisions a society that values holistic health, education, and sports. Our mission is to cultivate individuals who excel not just in competition, but in life.
                 </p>
-                <div className="grid sm:grid-cols-2 gap-10">
-                  <div className="p-8 rounded-[2rem] bg-slate-50 border border-slate-100">
-                    <h4 className="text-lg font-bold text-slate-900 uppercase mb-4 tracking-wider">Vision</h4>
-                    <p className="text-sm text-slate-500 leading-relaxed font-light italic">
-                      "To build a society where every individual's potential is nurtured and the nation's future is bright."
-                    </p>
-                  </div>
-                  <div className="p-8 rounded-[2rem] bg-orange-50/50 border border-orange-100">
-                    <h4 className="text-lg font-bold text-slate-900 uppercase mb-4 tracking-wider">Goal</h4>
-                    <p className="text-sm text-slate-500 leading-relaxed font-light italic">
-                      "Promoting physical education, sports excellence, and health awareness as foundations of success."
-                    </p>
-                  </div>
-                </div>
               </div>
               
-              {/* Split Image Grid */}
-              <div className="grid grid-cols-2 gap-6">
-                <div className="space-y-6 pt-12">
-                  <img src="https://images.unsplash.com/photo-1544928147-79a2dbc1f389?q=80&w=800&auto=format&fit=crop" className="rounded-[3rem] h-[500px] object-cover shadow-2xl" alt="Youth sports" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
+                <div className="soft-card rounded-md">
+                  <h4 className="text-xs font-bold text-foreground uppercase tracking-widest mb-4">Vision</h4>
+                  <p className="text-[13px] text-muted-foreground leading-relaxed font-medium">
+                    To build a society where every individual's potential is nurtured and the nation's future is bright.
+                  </p>
                 </div>
-                <div className="space-y-6">
-                  <img src="https://images.unsplash.com/photo-1503676260728-1c00da0702e8?q=80&w=800&auto=format&fit=crop" className="rounded-[3rem] h-[400px] object-cover shadow-2xl" alt="Education" />
-                  <div className="bg-slate-950 p-10 rounded-[3rem] text-white">
-                    <div className="text-5xl font-black mb-2 text-orange-500 tracking-tighter">2025</div>
-                    <div className="text-xs uppercase font-bold tracking-[0.2em] text-slate-500">Established Foundation</div>
-                  </div>
+                <div className="soft-card rounded-md">
+                  <h4 className="text-xs font-bold text-foreground uppercase tracking-widest mb-4">Goal</h4>
+                  <p className="text-[13px] text-muted-foreground leading-relaxed font-medium">
+                    Promoting physical education, sports excellence, and health awareness as foundations of success.
+                  </p>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Detailed Strategy */}
-        <section className="py-32 px-4 sm:px-6 lg:px-8 bg-slate-950 text-white overflow-hidden relative">
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-orange-600/10 rounded-full blur-[120px] -z-0" />
-          <div className="max-w-7xl mx-auto relative z-10">
-            <div className="text-center mb-24">
-              <h2 className="text-sm font-black tracking-[0.4em] text-orange-500 uppercase mb-6">Strategic Framework</h2>
-              <h3 className="text-5xl sm:text-7xl font-heading font-black tracking-tighter leading-tight">
-                Our Path to <span className="text-gradient">Impact</span>
-              </h3>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-20">
-              {[
-                {
-                  title: "Integrated Teaching",
-                  desc: "High-quality teaching integrating sports and academics to ensure a balanced educational path."
-                },
-                {
-                  title: "Athlete Empowerment",
-                  desc: "Discovery and nurturing of untapped talents, providing growth and competition opportunities."
-                },
-                {
-                  title: "Equal Access",
-                  desc: "Ensuring boys and girls have identical access to elite training and educational support."
-                },
-                {
-                  title: "Health Engagement",
-                  desc: "Promoting psychological balance and mental well-being through active community workshops."
-                }
-              ].map((strategy, i) => (
-                <div key={i} className="flex gap-8 group bg-white/5 p-10 rounded-[2.5rem] border border-white/5 hover:border-orange-500/20 transition-all duration-500">
-                  <div className="flex-shrink-0 text-5xl font-black text-slate-800 group-hover:text-orange-500 duration-500 transition-colors tracking-tighter">0{i+1}</div>
-                  <div className="space-y-4">
-                    <h4 className="text-3xl font-bold tracking-tight">{strategy.title}</h4>
-                    <p className="text-slate-400 font-light leading-relaxed max-w-sm">{strategy.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+            </motion.div>
             
-            <div className="mt-32 text-center">
-              <Link href="/donate">
-                <Button size="xl" className="bg-orange-600 hover:bg-orange-700 text-white rounded-full px-16 py-8 font-black uppercase tracking-widest text-lg shadow-2xl shadow-orange-900/40 border-none">
-                  Get Involved
-                </Button>
-              </Link>
-            </div>
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="grid grid-cols-2 gap-4 md:gap-6"
+            >
+              <div className="pt-8 md:pt-12">
+                <img src="https://images.unsplash.com/photo-1544928147-79a2dbc1f389?q=80&w=800&auto=format&fit=crop" className="rounded-md h-[400px] md:h-[450px] w-full object-cover border border-border" alt="Youth sports" />
+              </div>
+              <div className="space-y-4 md:y-6">
+                <img src="https://images.unsplash.com/photo-1503676260728-1c00da0702e8?q=80&w=800&auto=format&fit=crop" className="rounded-md h-[300px] md:h-[350px] w-full object-cover border border-border" alt="Education" />
+                <div className="bg-primary p-8 md:p-10 rounded-md text-primary-foreground text-center">
+                  <div className="text-3xl md:text-4xl font-black mb-1 tracking-tighter">2025</div>
+                  <div className="text-[10px] uppercase font-bold tracking-[0.2em] opacity-80">Established</div>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </section>
-      </main>
-      <Footer />
-    </>
+
+        {/* Strategic Framework */}
+        <section className="minimal-section bg-secondary/10">
+          <div className="text-center mb-16 md:mb-24">
+            <div className="text-primary font-bold uppercase tracking-[0.3em] text-[10px] mb-6 text-balance">Strategic Framework</div>
+            <h3 className="text-3xl md:text-6xl font-black text-foreground tracking-tighter leading-tight text-balance">
+              Our Path to Impact
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
+            {[
+              { title: "Integrated Teaching", desc: "High-quality teaching integrating sports and academics for a balanced path." },
+              { title: "Athlete Empowerment", desc: "Discovery and nurturing of untapped talents, providing growth opportunities." },
+              { title: "Equal Access", desc: "Ensuring boys and girls have identical access to elite training." },
+              { title: "Health Engagement", desc: "Promoting psychological balance through active community workshops." }
+            ].map((strategy, i) => (
+              <motion.div 
+                key={i} 
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="soft-card flex items-start gap-6 md:gap-8 rounded-md"
+              >
+                <div className="text-3xl md:text-4xl font-black text-primary/20 tracking-tighter">0{i+1}</div>
+                <div className="space-y-3">
+                  <h4 className="text-xl font-bold tracking-tight">{strategy.title}</h4>
+                  <p className="text-sm text-muted-foreground font-medium leading-relaxed">{strategy.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          
+          <div className="mt-16 md:mt-24 text-center">
+            <Link href="/donate">
+              <Button size="lg" className="rounded-md px-12 h-14 text-xs font-bold uppercase tracking-widest bg-primary hover:bg-primary/90 text-primary-foreground transition-all">
+                Get Involved Now <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
+            </Link>
+          </div>
+        </section>
+      </div>
   );
 }
+
