@@ -1,0 +1,27 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+}
+
+model GalleryItem {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  url         String
+  publicId    String?   // For images (Cloudinary)
+  type        MediaType @default(IMAGE)
+  title       String
+  description String?
+  category    String
+  year        String
+  location    String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}

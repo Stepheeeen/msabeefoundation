@@ -23,6 +23,7 @@ export function Header() {
   const navLinks = [
     { name: 'Our Story', href: '/about' },
     { name: 'Programs', href: '/programs' },
+    { name: 'Gallery', href: '/gallery' },
     { name: 'Impact', href: '/impact' },
     { name: 'Donate', href: '/donate' },
   ];

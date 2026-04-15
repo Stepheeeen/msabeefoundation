@@ -18,7 +18,7 @@ export function Footer() {
               <div className="text-[10px] uppercase tracking-[0.4em] text-muted-foreground font-bold mt-1">Foundation</div>
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed max-w-xs font-medium">
-              Cultivating a society that values holistic development, encompassing physical, social, and cognitive growth.
+              Providing educational opportunity through sports. Cultivating a society that values holistic development in Nigeria.
             </p>
             <div className="flex items-center gap-4">
             {[

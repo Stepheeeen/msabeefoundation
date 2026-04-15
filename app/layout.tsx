@@ -11,7 +11,7 @@ const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' })
 
 export const metadata: Metadata = {
   title: 'MSA BEE Foundation | Holistic Development & Educational Excellence',
-  description: 'Cultivating a society that values physical, social, cognitive, and emotional growth through sports and education in Nigeria.',
+  description: 'Providing educational opportunity through sports. Cultivating a society that values physical, social, cognitive, and emotional growth in Nigeria.',
   generator: 'v0.app',
   metadataBase: new URL('https://msabeefoundation.com'),
   alternates: {
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'MSA BEE Foundation | Holistic Development & Educational Excellence',
-    description: 'Cultivating a society that values physical, social, cognitive, and emotional growth through sports and education in Nigeria.',
+    description: 'Providing educational opportunity through sports. Cultivating a society that values physical, social, cognitive, and emotional growth in Nigeria.',
     url: 'https://msabeefoundation.com',
     siteName: 'MSA BEE Foundation',
     locale: 'en_NG',
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'MSA BEE Foundation | Holistic Development & Educational Excellence',
-    description: 'Cultivating a society that values physical, social, cognitive, and emotional growth through sports and education in Nigeria.',
+    description: 'Providing educational opportunity through sports. Cultivating a society that values physical, social, cognitive, and emotional growth in Nigeria.',
   },
   icons: {
     icon: [
@@ -66,7 +66,7 @@ export default function RootLayout({
               name: 'MSA BEE Foundation',
               url: 'https://msabeefoundation.com',
               logo: 'https://msabeefoundation.com/icon.svg',
-              description: 'Cultivating a society that values physical, social, cognitive, and emotional growth through sports and education in Nigeria.',
+              description: 'Providing educational opportunity through sports. Cultivating a society that values physical, social, cognitive, and emotional growth in Nigeria.',
               address: {
                 '@type': 'PostalAddress',
                 addressCountry: 'Nigeria',

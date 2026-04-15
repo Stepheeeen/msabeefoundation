@@ -25,7 +25,7 @@ export function Hero() {
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <div className="inline-block px-4 py-1 rounded-full border border-border text-[10px] uppercase tracking-[0.3em] font-bold text-muted-foreground mb-8 md:mb-12">
-            Established 2025
+            Established since 2016
           </div>
           
           <h1 className="text-4xl md:text-7xl lg:text-8xl font-black text-foreground mb-8 tracking-tighter leading-[0.9] text-balance">
@@ -33,7 +33,7 @@ export function Hero() {
           </h1>
           
           <p className="text-lg md:text-xl text-muted-foreground mb-16 max-w-2xl mx-auto leading-relaxed font-medium">
-            Cultivating a society that values holistic growth through elite sports and education in Nigeria.
+            Providing educational opportunity through sports. Cultivating a society that values holistic growth in Nigeria.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">

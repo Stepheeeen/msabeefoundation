@@ -1,35 +1,15 @@
 'use client';
 
-import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Heart, Book, Briefcase, Plus } from 'lucide-react';
+import { Heart, Book, Briefcase, Globe, ArrowRight } from 'lucide-react';
 
 export function DonateSnippet() {
   const allocations = [
     { icon: Heart, label: "Basketball Training", value: "40%", description: "Elite coaching and equipment" },
     { icon: Book, label: "Educational Sponsorship", value: "45%", description: "School fees & materials" },
     { icon: Briefcase, label: "Operations & Outreach", value: "15%", description: "Administration & community" },
-  ];
-
-  const donationLevels = [
-    {
-      amount: '₦5,000',
-      title: 'Friend',
-      description: 'Provides training gear for one youth',
-    },
-    {
-      amount: '₦10,000',
-      title: 'Champion',
-      description: 'Contributes to month of program operations',
-      featured: true,
-    },
-    {
-      amount: '₦50,000',
-      title: 'Leader',
-      description: "Sponsors one student's school fees for a term",
-    },
   ];
 
   return (
@@ -41,16 +21,16 @@ export function DonateSnippet() {
           viewport={{ once: true }}
           className="text-primary font-bold uppercase tracking-[0.3em] text-[10px] mb-4"
         >
-          Make an Impact
+          Global Giving
         </motion.div>
         <motion.h2 
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="text-4xl md:text-5xl font-black text-foreground mb-6 tracking-tighter"
+          className="text-4xl md:text-5xl font-black text-foreground mb-6 tracking-tight"
         >
-          Support Our Mission
+          One Gateway. <span className="text-primary">Infinite Impact.</span>
         </motion.h2>
         <motion.p 
           initial={{ opacity: 0, y: 10 }}
@@ -59,12 +39,12 @@ export function DonateSnippet() {
           transition={{ delay: 0.2 }}
           className="text-lg text-muted-foreground max-w-2xl mx-auto font-medium"
         >
-          Your donation directly transforms lives. Choose your impact level.
+          Support our mission in Naira, Dollars, Pounds, or Euros. You decide the amount; we ensure the impact.
         </motion.p>
       </div>
 
       {/* Allocation */}
-      <div className="grid lg:grid-cols-3 gap-8 mb-16">
+      <div className="grid lg:grid-cols-3 gap-8 mb-20">
         {allocations.map((item, i) => (
           <motion.div 
             key={i} 
@@ -78,23 +58,12 @@ export function DonateSnippet() {
               className="mb-8 flex items-center justify-center relative w-16 h-16 mx-auto"
               style={{ perspective: "1000px" }}
             >
-              {/* Pop Effect Background */}
-              <motion.div
-                initial={{ scale: 0, opacity: 0 }}
-                whileHover={{ scale: 2, opacity: 0.15 }}
-                transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                className="absolute inset-0 flex items-center justify-center text-primary pointer-events-none"
-              >
-                <item.icon className="w-full h-full stroke-[1] blur-md" />
-              </motion.div>
-
               <motion.div
                 whileHover={{ 
                   rotateX: 20, 
                   rotateY: 20,
                   scale: 1.1
                 }}
-                transition={{ type: "spring", stiffness: 300, damping: 10 }}
                 className="text-muted-foreground group-hover:text-primary transition-colors duration-300 relative z-10"
               >
                 <item.icon className="w-10 h-10 stroke-[1.5]" />
@@ -107,39 +76,24 @@ export function DonateSnippet() {
         ))}
       </div>
 
-      {/* Donation Levels */}
-      <div className="grid md:grid-cols-3 gap-6 mb-16">
-        {donationLevels.map((level, idx) => (
-          <motion.div
-            key={idx}
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 * idx }}
-            className={`soft-card flex flex-col h-full ${level.featured ? 'border-primary/50' : ''}`}
-          >
-            <div className="mb-6">
-              <div className="text-3xl font-black text-foreground mb-1 tracking-tighter">{level.amount}</div>
-              <div className="text-[10px] uppercase font-bold tracking-[0.2em] text-primary">{level.title}</div>
+      <div className="max-w-4xl mx-auto">
+        <div className="soft-card p-12 bg-secondary/10 flex flex-col md:flex-row items-center justify-between gap-12 rounded-xl border border-primary/10">
+          <div className="space-y-4 text-center md:text-left">
+            <div className="flex items-center justify-center md:justify-start gap-4 mb-2">
+               <Globe className="w-5 h-5 text-primary" />
+               <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Multi-Currency Enabled</span>
             </div>
-            <p className="text-sm text-muted-foreground mb-8 font-medium">{level.description}</p>
-            <div className="mt-auto">
-              <Link href="/donate">
-                <Button className={`w-full rounded-lg h-12 text-[10px] font-bold uppercase tracking-widest ${level.featured ? 'bg-primary text-primary-foreground' : 'variant-outline'}`}>
-                  Donate {level.amount}
-                </Button>
-              </Link>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-
-      <div className="text-center">
-        <Link href="/donate">
-          <Button variant="outline" className="rounded-lg px-12 h-14 text-[11px] font-bold uppercase tracking-widest border-border hover:bg-secondary transition-all">
-            See All Giving Options
-          </Button>
-        </Link>
+            <h3 className="text-2xl font-black tracking-tighter">Ready to Make a Difference?</h3>
+            <p className="text-sm text-muted-foreground font-medium max-w-md">
+              Securely donate using your local card or bank account. No fixed amounts—give what your heart dictates.
+            </p>
+          </div>
+          <Link href="/donate" className="w-full md:w-auto">
+            <Button className="w-full md:w-auto px-12 h-16 rounded-lg text-xs font-black uppercase tracking-[0.2em] bg-primary text-primary-foreground hover:scale-105 transition-all shadow-xl">
+              Launch Donation Portal <ArrowRight className="ml-2 w-4 h-4" />
+            </Button>
+          </Link>
+        </div>
       </div>
     </section>
   );

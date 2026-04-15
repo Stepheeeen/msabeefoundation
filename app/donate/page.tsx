@@ -1,19 +1,32 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Heart, ShieldCheck, Zap, Coins, Copy, Check, ArrowRight } from 'lucide-react';
-import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { useState } from 'react';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { Heart, ShieldCheck, Zap, Coins, Copy, Check, CreditCard, Globe, Mail } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import Script from 'next/script';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+
+declare global {
+  interface Window {
+    FlutterwaveCheckout: (config: any) => void;
+  }
+}
+
+const currencies = [
+  { code: 'NGN', symbol: '₦', label: 'Naira' },
+  { code: 'USD', symbol: '$', label: 'Dollar' },
+  { code: 'GBP', symbol: '£', label: 'Pounds' },
+  { code: 'EUR', symbol: '€', label: 'Euro' },
+];
 
 export default function DonatePage() {
   const [copied, setCopied] = useState(false);
+  const [amount, setAmount] = useState('');
+  const [email, setEmail] = useState('');
+  const [currency, setCurrency] = useState(currencies[0]);
+  const [loading, setLoading] = useState(false);
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -21,30 +34,51 @@ export default function DonatePage() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const donationLevels = [
-    {
-      amount: '₦5,000',
-      title: 'Friend',
-      description: 'Provides essential training gear/kits for one promising youth.',
-      icon: Zap
-    },
-    {
-      amount: '₦10,000',
-      title: 'Champion',
-      description: 'Contributes to a month of elite program operations & mentorship.',
-      icon: Heart,
-      featured: true
-    },
-    {
-      amount: '₦50,000',
-      title: 'Leader',
-      description: "Sponsors one talented student's full school fees for an entire term.",
-      icon: ShieldCheck
+  const handleDonate = () => {
+    if (!amount || parseFloat(amount) <= 0) {
+      alert("Please enter a valid amount");
+      return;
     }
-  ];
+    if (!email || !email.includes('@')) {
+      alert("Please enter a valid email address");
+      return;
+    }
+
+    setLoading(true);
+
+    const public_key = process.env.NEXT_PUBLIC_FLW_PUBLIC_KEY || "FLWPUBK_TEST-SANDBOX-X";
+
+    window.FlutterwaveCheckout({
+      public_key,
+      tx_ref: `MSABEE-${Date.now()}`,
+      amount: parseFloat(amount),
+      currency: currency.code,
+      payment_options: "card, banktransfer, ussd",
+      customer: {
+        email: email,
+      },
+      customizations: {
+        title: "MSA BEE Foundation",
+        description: "Donation for Sports & Education",
+        logo: "https://msabeefoundation.com/logo.png", // Verify logo path
+      },
+      callback: (data: any) => {
+        console.log("Payment successful", data);
+        setLoading(false);
+      },
+      onclose: () => {
+        setLoading(false);
+      },
+    });
+  };
 
   return (
     <div className="pt-20 bg-background text-foreground">
+        <Script 
+          src="https://checkout.flutterwave.com/v3.js" 
+          strategy="lazyOnload"
+        />
+
         {/* Support Hero */}
         <section className="relative h-[50vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 z-0">
@@ -81,118 +115,159 @@ export default function DonatePage() {
           </div>
         </section>
 
-        {/* Impact Transparency */}
+        {/* Dynamic Donation Console */}
+        <section className="minimal-section bg-secondary/10 relative">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-16">
+              <div className="text-primary font-bold uppercase tracking-[0.3em] text-[10px] mb-6">Choose Your Legacy</div>
+              <h3 className="text-4xl md:text-5xl font-black text-foreground tracking-tighter leading-tight">
+                Secure Digital <span className="text-primary">Donation</span>
+              </h3>
+            </div>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="soft-card p-8 md:p-12 lg:p-16 rounded-xl border-primary/20 shadow-2xl relative overflow-hidden"
+            >
+              <div className="absolute top-0 left-0 w-2 h-full bg-primary" />
+              
+              <div className="grid md:grid-cols-12 gap-12">
+                {/* Left side: Information */}
+                <div className="md:col-span-5 space-y-8">
+                  <div className="space-y-4">
+                    <h4 className="text-xl font-bold tracking-tight">Global Support</h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      We accept donations in Naira, Dollars, Pounds, and Euros. Flutterwave ensures your gift is processed securely and directly.
+                    </p>
+                  </div>
+                  
+                  <div className="space-y-6 pt-4">
+                    <div className="flex items-center gap-4 group">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary transition-colors duration-300">
+                        <CreditCard className="w-4 h-4 text-primary group-hover:text-primary-foreground" />
+                      </div>
+                      <span className="text-xs font-bold uppercase tracking-widest">Card & Transfer</span>
+                    </div>
+                    <div className="flex items-center gap-4 group">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary transition-colors duration-300">
+                        <Globe className="w-4 h-4 text-primary group-hover:text-primary-foreground" />
+                      </div>
+                      <span className="text-xs font-bold uppercase tracking-widest">Global Currencies</span>
+                    </div>
+                    <div className="flex items-center gap-4 group">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary transition-colors duration-300">
+                        <ShieldCheck className="w-4 h-4 text-primary group-hover:text-primary-foreground" />
+                      </div>
+                      <span className="text-xs font-bold uppercase tracking-widest">Encrypted Security</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right side: Input Form */}
+                <div className="md:col-span-7 bg-background/50 p-8 rounded-xl border border-border/50">
+                  <div className="space-y-8">
+                    {/* Currency Selector */}
+                    <div className="space-y-4">
+                      <Label className="text-[10px] uppercase font-bold tracking-[0.2em] text-muted-foreground">Select Currency</Label>
+                      <div className="grid grid-cols-4 gap-2">
+                        {currencies.map((curr) => (
+                          <button
+                            key={curr.code}
+                            onClick={() => setCurrency(curr)}
+                            className={`py-3 rounded-md text-[10px] font-black tracking-widest transition-all ${
+                              currency.code === curr.code 
+                                ? 'bg-primary text-primary-foreground shadow-lg scale-105' 
+                                : 'bg-secondary text-muted-foreground hover:bg-secondary/80'
+                            }`}
+                          >
+                            {curr.code}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Email Input */}
+                    <div className="space-y-4">
+                      <Label className="text-[10px] uppercase font-bold tracking-[0.2em] text-muted-foreground flex items-center gap-2">
+                        <Mail className="w-3 h-3" /> Email Address
+                      </Label>
+                      <Input 
+                        type="email"
+                        placeholder="your@email.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="h-14 rounded-lg bg-background border-border focus:ring-primary font-bold"
+                      />
+                    </div>
+
+                    {/* Amount Input */}
+                    <div className="space-y-4">
+                      <Label className="text-[10px] uppercase font-bold tracking-[0.2em] text-muted-foreground">Donation Amount</Label>
+                      <div className="relative">
+                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-2xl font-black text-primary">
+                          {currency.symbol}
+                        </div>
+                        <Input 
+                          type="number"
+                          placeholder="0.00"
+                          value={amount}
+                          onChange={(e) => setAmount(e.target.value)}
+                          className="h-20 pl-12 text-3xl font-black rounded-lg bg-background border-border focus:ring-primary tracking-tighter"
+                        />
+                      </div>
+                    </div>
+
+                    <Button 
+                      onClick={handleDonate}
+                      disabled={loading}
+                      className="w-full h-16 rounded-lg bg-primary text-primary-foreground font-black uppercase tracking-[0.2em] text-sm hover:scale-[1.02] transition-all shadow-xl"
+                    >
+                      {loading ? 'Initializing...' : `Complete ${currency.symbol}${amount || '0'} Donation`}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Transparency Section */}
         <section className="minimal-section border-b border-border">
-          <div className="grid lg:grid-cols-3 gap-8">
+          <div className="grid lg:grid-cols-3 gap-8 text-center">
             {[
               { title: 'Basketball Excellence', value: '40%', desc: 'Elite coaching, equipment, and logistics.', icon: Zap },
               { title: 'Academic Success', value: '45%', desc: 'School fees, books, and materials.', icon: ShieldCheck },
               { title: 'Community Growth', value: '15%', desc: 'Operations and sustainable expansion.', icon: Coins },
             ].map((item, i) => (
-              <motion.div 
-                key={i} 
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="soft-card flex flex-col items-center text-center py-12 group"
-              >
-                <div 
-                  className="mb-8 flex items-center justify-center"
-                  style={{ perspective: "1000px" }}
-                >
-                  <motion.div
-                    whileHover={{ 
-                      rotateX: 20, 
-                      rotateY: 20,
-                      scale: 1.2
-                    }}
-                    className="text-muted-foreground group-hover:text-primary transition-colors duration-300"
-                  >
-                    <item.icon className="w-10 h-10 stroke-[1.5]" />
-                  </motion.div>
-                </div>
-                <div className="text-4xl font-black text-foreground mb-4 tracking-tighter">{item.value}</div>
-                <h3 className="text-lg font-bold text-foreground mb-3">{item.title}</h3>
-                <p className="text-sm text-muted-foreground font-medium leading-relaxed max-w-[220px]">{item.desc}</p>
-              </motion.div>
+              <div key={i} className="space-y-6">
+                <item.icon className="w-8 h-8 mx-auto text-primary" />
+                <div className="text-4xl font-black tracking-tighter">{item.value}</div>
+                <h4 className="text-sm font-bold uppercase tracking-widest">{item.title}</h4>
+                <p className="text-sm text-muted-foreground font-medium max-w-[200px] mx-auto">{item.desc}</p>
+              </div>
             ))}
           </div>
         </section>
 
-        {/* Donation Tiers */}
-        <section className="minimal-section bg-secondary/10">
-          <div className="text-center mb-20">
-            <div className="text-primary font-bold uppercase tracking-[0.3em] text-[10px] mb-6">Support Tiers</div>
-            <h3 className="text-4xl md:text-5xl font-black text-foreground tracking-tighter leading-tight text-balance">
-              Choose Your Legacy
-            </h3>
-          </div>
-
-          <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {donationLevels.map((level, idx) => (
-              <motion.div 
-                key={idx} 
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                className={`soft-card flex flex-col group ${level.featured ? 'border-primary/50 ring-1 ring-primary/20' : ''}`}
-              >
-                <div 
-                  className="mb-8 flex items-center justify-start"
-                  style={{ perspective: "1000px" }}
-                >
-                  <motion.div
-                    whileHover={{ 
-                      rotateX: 20, 
-                      rotateY: 20,
-                      scale: 1.2
-                    }}
-                    className="text-muted-foreground group-hover:text-primary transition-colors duration-300"
-                  >
-                    <level.icon className="w-10 h-10 stroke-[1.5]" />
-                  </motion.div>
-                </div>
-                <div className="mb-10">
-                  <div className="text-4xl font-black text-foreground mb-2 tracking-tighter">{level.amount}</div>
-                  <div className="text-[10px] uppercase font-bold tracking-[0.3em] text-primary">{level.title}</div>
-                </div>
-                <p className="text-sm text-muted-foreground font-medium leading-relaxed mb-12">
-                  {level.description}
-                </p>
-                <div className="mt-auto">
-                  <Button className={`w-full rounded-lg h-14 text-xs font-bold uppercase tracking-widest ${level.featured ? 'bg-primary text-primary-foreground' : 'variant-outline'}`}>
-                    Donate {level.amount}
-                  </Button>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </section>
-
-        {/* Banking Info */}
+        {/* Banking Info (Fallback) */}
         <section className="minimal-section">
           <div className="grid lg:grid-cols-2 gap-24 items-center">
-            <motion.div 
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="space-y-12"
-            >
+            <div className="space-y-12">
               <div>
                 <div className="text-primary font-bold uppercase tracking-[0.3em] text-[10px] mb-6">Transparency First</div>
-                <h3 className="text-4xl md:text-5xl font-black text-foreground tracking-tighter leading-tight text-balance">
-                  Accountability <br/> & Trust
+                <h3 className="text-4xl md:text-5xl font-black text-foreground tracking-tighter leading-tight">
+                  Direct Bank <br/> <span className="text-primary">Transfers</span>
                 </h3>
               </div>
               <p className="text-lg text-muted-foreground font-medium leading-relaxed">
-                We are committed to transparent fund management. Every donation is tracked and reported to ensure maximum impact for the youth of Kogi State.
+                If you prefer manual bank transfers for larger institutional contributions, please use our primary Nigerian Naira account below.
               </p>
               
-              <div className="soft-card bg-primary text-primary-foreground p-10 space-y-8 relative overflow-hidden group rounded-xl">
+              <div className="soft-card bg-foreground/5 p-10 space-y-8 relative overflow-hidden group rounded-xl border border-border">
                 <div className="relative z-10">
-                  <div className="text-[10px] uppercase tracking-[0.3em] mb-8 opacity-80 font-bold">Direct Bank Transfer</div>
+                  <div className="text-[10px] uppercase tracking-[0.3em] mb-8 opacity-80 font-bold text-primary">Naira Account (NGN)</div>
                   <div className="space-y-6">
                     <div>
                       <div className="text-[8px] uppercase tracking-widest opacity-60 mb-2 font-bold">Account Name</div>
@@ -206,7 +281,7 @@ export default function DonatePage() {
                           onClick={() => copyToClipboard('0000000000')}
                         >
                           0000000000
-                          {copied ? <Check className="w-4 h-4 text-green-300" /> : <Copy className="w-4 h-4 opacity-40 group-hover/copy:opacity-100 transition-opacity" />}
+                          {copied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4 opacity-40 group-hover/copy:opacity-100 transition-opacity" />}
                         </div>
                       </div>
                       <div>
@@ -216,19 +291,11 @@ export default function DonatePage() {
                     </div>
                   </div>
                 </div>
-                <div className="mt-8 pt-8 border-t border-white/10 text-[9px] font-bold opacity-60 uppercase tracking-widest leading-relaxed">
-                  * Use your Name or Phone Number as the transfer description.
-                </div>
               </div>
-            </motion.div>
+            </div>
 
-            <motion.div 
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="soft-card p-12 md:p-16 space-y-12 rounded-xl"
-            >
-              <h3 className="text-2xl font-black tracking-tighter">Contact <span className="text-primary">Support</span></h3>
+            <div className="soft-card p-12 md:p-16 space-y-12 rounded-xl bg-card border border-border">
+              <h3 className="text-2xl font-black tracking-tighter">Global <span className="text-primary">Contacts</span></h3>
               <div className="space-y-8">
                 {[
                   { label: "Organization", val: "MSA BEE Foundation" },
@@ -241,44 +308,7 @@ export default function DonatePage() {
                   </div>
                 ))}
               </div>
-              <div className="pt-8 text-center sm:text-left">
-                <Link href="mailto:info@msabeefoundation.com">
-                  <Button size="lg" className="rounded-lg bg-foreground text-background hover:bg-foreground/90 transition-all font-bold uppercase tracking-widest text-[11px] px-10 h-14">
-                    Request Tax Receipt
-                  </Button>
-                </Link>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* FAQ Section */}
-        <section className="minimal-section bg-secondary/10 border-t border-border">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-16">
-              <div className="text-primary font-bold uppercase tracking-[0.3em] text-[10px] mb-6">Common Questions</div>
-              <h3 className="text-3xl md:text-4xl font-black text-foreground tracking-tighter text-balance">
-                Support FAQ
-              </h3>
             </div>
-            
-            <Accordion type="single" collapsible className="w-full space-y-4">
-              {[
-                { q: "How are the funds utilized?", a: "100% of public donations go directly to our programs. Administrative costs are covered through separate private grants." },
-                { q: "Can I donate in other currencies?", a: "Yes, for international donations in USD or EUR, please contact our support team for specialized transfer details." },
-                { q: "Are donations tax-deductible?", a: "MSA BEE Foundation is a registered NGO in Nigeria. We provide official tax receipts for all contributions upon request." },
-                { q: "Can I visit the projects I support?", a: "Absolutely! We organize quarterly tours for our partners to see the progress in Kogi State firsthand." }
-              ].map((item, i) => (
-                <AccordionItem key={i} value={`item-${i}`} className="border border-border bg-background px-8 rounded-xl">
-                  <AccordionTrigger className="text-base font-bold text-foreground hover:text-primary transition-colors hover:no-underline py-6">
-                    {item.q}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground leading-relaxed pb-6 font-medium">
-                    {item.a}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
           </div>
         </section>
       </div>

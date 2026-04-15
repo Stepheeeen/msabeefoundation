@@ -32,7 +32,7 @@ export default function AboutPage() {
               transition={{ delay: 0.2 }}
               className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto font-medium"
             >
-              Building a legacy of holistic excellence in Nigeria through sports, education, and character.
+              Providing educational opportunity through sports. Building a legacy of holistic excellence in Nigeria.
             </motion.p>
           </div>
         </section>
@@ -52,7 +52,7 @@ export default function AboutPage() {
                   Shaping the <span className="text-primary">Complete</span> Individual
                 </h3>
                 <p className="text-lg text-muted-foreground leading-relaxed font-medium">
-                  The MSA BEE FOUNDATION envisions a society that values holistic health, education, and sports. Our mission is to cultivate individuals who excel not just in competition, but in life.
+                  The MSA BEE FOUNDATION envisions a society that values holistic health, education, and sports. Our mission is providing educational opportunity through sports to cultivate individuals who excel not just in competition, but in life.
                 </p>
               </div>
               
@@ -84,7 +84,7 @@ export default function AboutPage() {
               <div className="space-y-4 md:y-6">
                 <img src="https://images.unsplash.com/photo-1503676260728-1c00da0702e8?q=80&w=800&auto=format&fit=crop" className="rounded-md h-[300px] md:h-[350px] w-full object-cover border border-border" alt="Education" />
                 <div className="bg-primary p-8 md:p-10 rounded-md text-primary-foreground text-center">
-                  <div className="text-3xl md:text-4xl font-black mb-1 tracking-tighter">2025</div>
+                  <div className="text-3xl md:text-4xl font-black mb-1 tracking-tighter">2016</div>
                   <div className="text-[10px] uppercase font-bold tracking-[0.2em] opacity-80">Established</div>
                 </div>
               </div>
