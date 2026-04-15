@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import Script from 'next/script';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { toast } from 'sonner';
 
 declare global {
   interface Window {
@@ -27,8 +28,16 @@ export default function DonatePage() {
   const [email, setEmail] = useState('');
   const [currency, setCurrency] = useState(currencies[0]);
   const [loading, setLoading] = useState(false);
+  const [settings, setSettings] = useState<any>(null);
+
+  useEffect(() => {
+    fetch('/api/admin/settings')
+      .then(res => res.json())
+      .then(data => setSettings(data));
+  }, []);
 
   const copyToClipboard = (text: string) => {
+    if (!text) return;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -36,17 +45,17 @@ export default function DonatePage() {
 
   const handleDonate = () => {
     if (!amount || parseFloat(amount) <= 0) {
-      alert("Please enter a valid amount");
+      toast.error("Please enter a valid amount");
       return;
     }
     if (!email || !email.includes('@')) {
-      alert("Please enter a valid email address");
+      toast.error("Please enter a valid email address");
       return;
     }
 
     setLoading(true);
 
-    const public_key = process.env.NEXT_PUBLIC_FLW_PUBLIC_KEY || "FLWPUBK_TEST-SANDBOX-X";
+    const public_key = process.env.NEXT_PUBLIC_FLW_PUBLIC_KEY;
 
     window.FlutterwaveCheckout({
       public_key,
@@ -60,11 +69,18 @@ export default function DonatePage() {
       customizations: {
         title: "MSA BEE Foundation",
         description: "Donation for Sports & Education",
-        logo: "https://msabeefoundation.com/logo.png", // Verify logo path
+        logo: "https://msabeefoundation.com/logo.png",
       },
       callback: (data: any) => {
-        console.log("Payment successful", data);
-        setLoading(false);
+        // Call server side verify
+        fetch('/api/donate/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ transaction_id: data.transaction_id, tx_ref: data.tx_ref })
+        }).then(() => {
+           toast.success("Donation Verified Successfully");
+           setLoading(false);
+        });
       },
       onclose: () => {
         setLoading(false);
@@ -271,22 +287,22 @@ export default function DonatePage() {
                   <div className="space-y-6">
                     <div>
                       <div className="text-[8px] uppercase tracking-widest opacity-60 mb-2 font-bold">Account Name</div>
-                      <div className="text-2xl font-black tracking-tighter uppercase">MSA BEE FOUNDATION</div>
+                      <div className="text-2xl font-black tracking-tighter uppercase">{settings?.accountName || 'LOADING...'}</div>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <div className="text-[8px] uppercase tracking-widest opacity-60 mb-2 font-bold">Account Number</div>
                         <div 
                           className="text-2xl font-black tracking-tighter flex items-center gap-3 cursor-pointer group/copy"
-                          onClick={() => copyToClipboard('0000000000')}
+                          onClick={() => copyToClipboard(settings?.accountNumber)}
                         >
-                          0000000000
+                          {settings?.accountNumber || '0000000000'}
                           {copied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4 opacity-40 group-hover/copy:opacity-100 transition-opacity" />}
                         </div>
                       </div>
                       <div>
                         <div className="text-[8px] uppercase tracking-widest opacity-60 mb-2 font-bold">Bank Name</div>
-                        <div className="text-2xl font-black tracking-tighter">ZENITH BANK</div>
+                        <div className="text-2xl font-black tracking-tighter capitalize">{settings?.bankName || 'ZENITH BANK'}</div>
                       </div>
                     </div>
                   </div>
@@ -299,8 +315,8 @@ export default function DonatePage() {
               <div className="space-y-8">
                 {[
                   { label: "Organization", val: "MSA BEE Foundation" },
-                  { label: "Email", val: "info@msabeefoundation.com" },
-                  { label: "Location", val: "122 IBB Way, Lokoja, Kogi State" },
+                  { label: "Email", val: settings?.contactEmail || "info@msabeefoundation.com" },
+                  { label: "Location", val: settings?.contactLocation || "122 IBB Way, Lokoja, Kogi State" },
                 ].map((item, i) => (
                   <div key={i}>
                     <div className="text-[9px] font-bold text-primary uppercase tracking-[0.3em] mb-2">{item.label}</div>

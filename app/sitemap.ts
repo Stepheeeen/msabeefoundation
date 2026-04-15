@@ -2,38 +2,20 @@ import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://msabeefoundation.com'
-  const lastModified = new Date()
+  
+  const staticRoutes = [
+    '',
+    '/about',
+    '/impact',
+    '/programs',
+    '/gallery',
+    '/donate',
+  ].map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: route === '' ? 1 : 0.8,
+  }))
 
-  return [
-    {
-      url: baseUrl,
-      lastModified,
-      changeFrequency: 'monthly',
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/programs`,
-      lastModified,
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/impact`,
-      lastModified,
-      changeFrequency: 'weekly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/donate`,
-      lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.5,
-    },
-  ]
+  return [...staticRoutes]
 }

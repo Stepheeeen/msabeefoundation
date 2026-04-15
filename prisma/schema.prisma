@@ -25,3 +25,59 @@ model GalleryItem {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }
+
+model Donation {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  email       String
+  amount      Float
+  currency    String
+  txRef       String   @unique
+  flwId       Int?     @unique
+  status      String   @default("PENDING") // PENDING, SUCCESS, FAILED
+  customerName String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Withdrawal {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  amount          Float
+  currency        String
+  bankName        String
+  accountNumber   String
+  status          String   @default("PENDING") // PENDING, SUCCESS, FAILED
+  transferCode    String?  @unique
+  reference       String?  @unique
+  createdAt       DateTime @default(now())
+}
+
+model SiteSettings {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  contactEmail     String   @default("info@msabeefoundation.com")
+  contactPhone     String   @default("+234 000 0000 000")
+  contactLocation  String   @default("122 IBB Way Lokoja, Kogi State")
+  
+  // Impact Stats
+  impactAthletes   Int      @default(750)
+  impactScholarships Int    @default(120)
+  impactCommunities Int     @default(50)
+  impactTeams      Int      @default(25)
+  
+  // Banking Info (Display only)
+  bankName         String   @default("ZENITH BANK")
+  accountName      String   @default("MSA BEE FOUNDATION")
+  accountNumber    String   @default("0000000000")
+  
+  // Settlement Account (For Withdrawals)
+  settlementBankCode String?
+  settlementAccountNumber String?
+
+  // Credentials & API Keys (Managed via Admin UI)
+  flwSecretKey         String?
+  resendApiKey         String?
+  adminReportEmail     String?
+  cloudinaryCloudName  String?
+  cloudinaryUploadPreset String?
+  
+  updatedAt        DateTime @updatedAt
+}

@@ -1,10 +1,19 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Mail, Globe, MapPin, Instagram, Twitter, Facebook } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export function Footer() {
+  const [settings, setSettings] = useState<any>(null);
+
+  useEffect(() => {
+    fetch('/api/admin/settings')
+      .then(res => res.json())
+      .then(data => setSettings(data));
+  }, []);
+
   return (
     <footer className="bg-background text-foreground py-24 px-4 sm:px-6 lg:px-8 border-t border-border overflow-hidden">
       <div className="max-w-7xl mx-auto">
@@ -95,8 +104,8 @@ export function Footer() {
                 <Mail className="w-4 h-4 text-primary mt-0.5" />
                 <div>
                   <label className="text-[9px] uppercase tracking-widest text-muted-foreground block mb-1 font-bold">Email</label>
-                  <a href="mailto:info@msabeefoundation.com" className="text-muted-foreground hover:text-foreground transition-colors">
-                    info@msabeefoundation.com
+                  <a href={`mailto:${settings?.contactEmail || 'info@msabeefoundation.com'}`} className="text-muted-foreground hover:text-foreground transition-colors">
+                    {settings?.contactEmail || 'info@msabeefoundation.com'}
                   </a>
                 </div>
               </li>
@@ -105,7 +114,7 @@ export function Footer() {
                 <div>
                   <label className="text-[9px] uppercase tracking-widest text-muted-foreground block mb-1 font-bold">Location</label>
                   <span className="text-muted-foreground leading-relaxed">
-                    122 IBB Way Lokoja, Kogi State
+                    {settings?.contactLocation || '122 IBB Way Lokoja, Kogi State'}
                   </span>
                 </div>
               </li>

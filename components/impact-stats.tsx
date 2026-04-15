@@ -79,12 +79,30 @@ function StatItem({ icon: Icon, value, label, suffix = "+", delay = 0 }: StatIte
 }
 
 export function ImpactStats() {
-  const stats = [
+  const [stats, setStats] = useState([
     { icon: Users, value: 50, label: "Communities Supported", delay: 0 },
     { icon: BookOpen, value: 120, label: "Scholarships Awarded", delay: 0.1 },
     { icon: Trophy, value: 25, label: "Sports Teams", delay: 0.2 },
     { icon: Globe, value: 12, label: "Regions Empowered", delay: 0.3 },
-  ];
+  ]);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const response = await fetch('/api/admin/settings');
+        const data = await response.json();
+        setStats([
+          { icon: Users, value: data.impactCommunities || 50, label: "Communities Supported", delay: 0 },
+          { icon: BookOpen, value: data.impactScholarships || 120, label: "Scholarships Awarded", delay: 0.1 },
+          { icon: Trophy, value: data.impactTeams || 25, label: "Sports Teams", delay: 0.2 },
+          { icon: Globe, value: data.impactAthletes || 750, label: "Athletes Trained", delay: 0.3 },
+        ]);
+      } catch (error) {
+        console.error('Failed to fetch impact metrics');
+      }
+    };
+    fetchStats();
+  }, []);
 
   return (
     <section className="minimal-section border-b border-border">

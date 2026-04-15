@@ -4,6 +4,7 @@ import { Analytics } from '@vercel/analytics/next'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { BackToTop } from '@/components/back-to-top'
+import { ConditionalShell } from '@/components/conditional-shell'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
@@ -29,6 +30,18 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'MSA BEE Foundation | Holistic Development & Educational Excellence',
     description: 'Providing educational opportunity through sports. Cultivating a society that values physical, social, cognitive, and emotional growth in Nigeria.',
+  },
+  keywords: ['MSA BEE Foundation', 'Educational Excellence Nigeria', 'Sports and Education', 'Holistic Development', 'NGO Nigeria', 'Scholarships Nigeria', 'Athletic Training'],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
   icons: {
     icon: [
@@ -79,10 +92,9 @@ export default function RootLayout({
             }),
           }}
         />
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <BackToTop />
+        <ConditionalShell>
+          {children}
+        </ConditionalShell>
         <Analytics />
       </body>
     </html>
